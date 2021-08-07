@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    <title>Receipe of the Day</title>
+</head>
+<body>
+    <div id="nav"></div>
+    <div id="dish"></div>
+</body>
+</html>
+
+<script type="module">
+let main = document.getElementById("dish");
+import navbar from './navbar.js'
+ document.getElementById("nav").innerHTML = navbar();
+
+fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.meals);
+        main.innerHTML = null;
+
+        let arr = data.meals;
+        arr.forEach(({ strArea, strCategory, strMealThumb ,strInstructions,strIngredient1,strIngredient2,strIngredient3,strIngredient4}) => {
+          let ar = document.createElement("p");
+          let cat = document.createElement("p");
+          let ingri = document.createElement("p");
+          let reci = document.createElement("p");
+          let thumb = document.createElement("img");
+          let div=document.createElement('div')
+
+          ar.innerHTML = strArea;
+          cat.innerHTML = strCategory;
+          thumb.src = strMealThumb;
+          ingri.innerHTML=`Main Ingredients : ${strIngredient1},${strIngredient2},${strIngredient3},${strIngredient4}`
+          reci.innerHTML=`Instructions : ${strInstructions}`
+
+          div.append(thumb, cat, ar,ingri,reci);
+          main.append(div)
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+</script>
+

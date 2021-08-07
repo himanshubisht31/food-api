@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <title>Food App</title>
+  </head>
+  <body>
+    <div id="nav"></div>
+
+    <div class="search">
+      <input type="text" id="inp" placeholder="Search" />
+      <button id="btn">
+        <span class="material-icons"> search </span>
+      </button>
+    </div>
+
+    <div id="suggestions"></div>
+
+    <div id="item"></div>
+  </body>
+</html>
+
+<script type="module">
+  let suggestions = document.getElementById("suggestions");
+
+  import navbar from "./navbar.js";
+  document.getElementById("nav").innerHTML = navbar();
+
+  let main = document.getElementById("item");
+  let timer;
+
+  document.getElementById("btn").addEventListener("click", append);
+
+  document.getElementById("inp").addEventListener("input", throttle);
+
+  function throttle() {
+    if (timer) return false;
+
+    timer = setTimeout(() => {
+      find();
+      timer = undefined;
+    }, 500);
+  }
+
+ async function append() {
+    let q = document.getElementById("inp").value;
+    let res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${q}`
+    );
+    let data = await res.json();
+
+    let arr = data.meals;
+    console.log(arr);
+          main.innerHTML = null;
+
+
+    arr.forEach(({ strArea, strCategory,strMealThumb}) => {
+      let ar = document.createElement("p");
+      let cat = document.createElement("p");
+      let thumb = document.createElement("img");
+      let div = document.createElement("div");
+
+      ar.innerHTML = strArea;
+      cat.innerHTML = strCategory;
+      thumb.src = strMealThumb;
+      // suggestions.style.display = "none";
+
+      div.append(thumb, cat, ar);
+      main.append(div);
+       suggestions.style.display = "none";
+    });
+  }
+
+  async function find() {
+    let q = document.getElementById("inp").value;
+    suggestions.innerHTML = null;
+
+    if (q.length <= 1) return false;
+
+    let res = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${q}`
+    );
+    let data = await res.json();
+
+    let arr = data.meals;
+    console.log(arr);
+
+    arr.forEach(({ strMeal }) => {
+      let para = document.createElement("p");
+      para.innerHTML = strMeal;
+      para.style.cursor = "pointer";
+      para.addEventListener("click", () => {
+        arr.forEach(({ strArea, strCategory, strMealThumb }) => {
+          let ar = document.createElement("p");
+          let cat = document.createElement("p");
+          let thumb = document.createElement("img");
+          let div = document.createElement("div");
+
+          ar.innerHTML = strArea;
+          cat.innerHTML = strCategory;
+          thumb.src = strMealThumb;
+          suggestions.style.display = "none";
+          main.innerHTML = null;
+
+          div.append(thumb, cat, ar);
+          main.append(div);
+        });
+      });
+      suggestions.append(para);
+      suggestions.style.display = "block";
+    });
+
+    // arr.forEach(({ strArea, strCategory, strMealThumb }) => {
+    //   let ar = document.createElement("p");
+    //   let cat = document.createElement("p");
+    //   let thumb = document.createElement("img");
+    //   let div = document.createElement("div");
+
+    //   ar.innerHTML = strArea;
+    //   cat.innerHTML = strCategory;
+    //   thumb.src = strMealThumb;
+
+    //   div.append(thumb, cat, ar);
+    //   main.append(div);
+    // });
+
+    // fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${q}`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data.meals);
+    //   main.innerHTML = null;
+
+    //   let arr = data.meals;
+    //   arr.forEach(({ strArea, strCategory, strMealThumb }) => {
+    //     let ar = document.createElement("p");
+    //     let cat = document.createElement("p");
+    //     let thumb = document.createElement("img");
+    //     let div = document.createElement("div");
+
+    //     ar.innerHTML = strArea;
+    //     cat.innerHTML = strCategory;
+    //     thumb.src = strMealThumb;
+
+    //     div.append(thumb, cat, ar);
+    //     main.append(div);
+    //   });
+    // })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
+</script>

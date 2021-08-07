@@ -1,0 +1,131 @@
+* {
+  box-sizing: border-box;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#navbar {
+  border-bottom: 2px solid grey;
+  border-top: 2px solid grey;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-items: flex-end;
+  align-items: center;
+  padding: 10px;
+  font-size: large;
+}
+
+#navbar a {
+  text-decoration: none;
+  color: black;
+}
+
+#navbar p {
+  /* border: 1px solid red; */
+  margin: 20px;
+}
+
+/* search bar */
+
+.search {
+  /* border: 1px solid grey; */
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  margin: 20px auto;
+  /* position: absolute; */
+  /* top: 10px; */
+  /* left: 20%; */
+  padding: 10px;
+  border-radius: 50px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#inp {
+  padding: 10px;
+  font-size: 17px;
+  border: none;
+  width: 80%;
+  background-color: white;
+  color: #5e7575;
+}
+#inp:focus {
+  outline: none;
+}
+
+.search button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: white;
+  border-radius: 25px;
+}
+
+.search button:hover {
+  cursor: pointer;
+  background-color: rgb(241, 234, 234);
+}
+
+/* food items list */
+
+#item {
+  /* border: 2px solid red; */
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+#item img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#item div {
+  /* width: 50%; */
+  margin: 20px auto;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Random  */
+
+#dish{
+  width: 70%;
+  /* border: 2px solid red; */
+  text-align: center;
+  margin: 20px auto;
+  line-height: 30px;
+}
+ #dish img{
+   width: 40%;
+ }
+
+ /* suggestions */
+
+ #suggestions{
+   /* border: 2px solid rebeccapurple; */
+   min-height: 20vh;
+   width: 50%;
+   margin: auto;
+   display: none;
+ }
+
+
+ /* Latest */
+
+ #latest{
+   /* border: 2px solid red; */
+   width: 60%;
+   text-align: center;
+   margin: 20px auto;
+ }
+
+ #latest img{
+   width: 50%;
+ }
